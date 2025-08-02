@@ -227,6 +227,27 @@ hr {
   color: #484848;
 }
 
+.invitation .grid-container .loader {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #677e76;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 button {
   background: #FFFFFF;
   border: 1px solid #CDBCBF;
@@ -358,20 +379,20 @@ footer {
   transform: translateX(-1.5rem);
 }
 
-.content-extra{
+.content-extra {
   display: flex;
   align-items: center;
-  gap:10px;  
-  padding-top:  1.3rem;
+  gap: 10px;
+  padding-top: 1.3rem;
 }
 
-.content-extra img{
+.content-extra img {
   height: 1.5rem;
-  width:  1.5rem;
+  width: 1.5rem;
   filter: invert(40%);
 }
 
-.content-extra .alias{
+.content-extra .alias {
   display: flex;
   align-items: center;
   justify-content: center;

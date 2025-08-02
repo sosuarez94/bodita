@@ -14,6 +14,7 @@ const Invitation: React.FC = () => {
   const [options, setOptions] = useState<Option[]>([]);
   const [telefono, setTelefono] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [sendLoading, setSendLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [allConfirmed, setAllConfirmed] = useState<boolean>(false);
   telefono
@@ -33,9 +34,9 @@ const Invitation: React.FC = () => {
         //console.log(data);
 
         const personasOriginales: string[] =
-          data.personasOriginales?.split(",").map((p:any) => p.trim()) ?? [];
+          data.personasOriginales?.split(",").map((p: any) => p.trim()) ?? [];
         const nombresConfirmados: string[] =
-          data.nombresConfirmadosParaID?.split(",").map((p:any) => p.trim()) ?? [];
+          data.nombresConfirmadosParaID?.split(",").map((p: any) => p.trim()) ?? [];
 
         const mapped = personasOriginales.map((name, index) => {
           const yaConfirmado = nombresConfirmados.includes(name);
@@ -86,9 +87,11 @@ const Invitation: React.FC = () => {
     }
 
     try {
+      setSendLoading(true)
       const result = await postConfirmation(personas, telefono);
       alert("Confirmación enviada");
       result
+      setSendLoading(false)
       //console.log(result);
     } catch (error) {
       alert("Error al enviar la confirmación");
@@ -109,7 +112,12 @@ const Invitation: React.FC = () => {
           <p style={{ color: "red" }}>{error}</p>
         </div>
       )}
-      {!loading && !error && (
+      {sendLoading && (
+        <div className="content-msg">
+          <span className="loader"></span>
+        </div>
+      )}
+      {!loading && !error && !sendLoading && (
         <>
           <div className="grid-container">
             {options.map((option, index) => (
