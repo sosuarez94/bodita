@@ -27,7 +27,7 @@ const Modal: React.FC<ModalProps> = ({ info, onClose }) => {
               {data.place}
             </a>
           ) : (
-            <h3>{data.place}</h3>
+            <h3 className="alias">{data.place}</h3>
           )}
           {data.time && <h4>{data.time}</h4>}
           <h4>{data.ubication}</h4>

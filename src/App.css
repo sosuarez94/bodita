@@ -301,6 +301,9 @@ footer {
   padding: 1.68rem 2rem;
   border: 1px solid #ccc;
   border-radius: 8px;
+    box-shadow:
+    3px 3px 5px rgba(72, 72, 72, 0.4),
+    6px 6px 10px rgba(72, 72, 72, 0.2);
 }
 
 .modal .container {
@@ -330,7 +333,6 @@ footer {
   font-weight: 400;
 }
 
-.modal .container .central h3,
 .modal .container .central .h3 {
   display: flex;
   align-items: center;
@@ -374,9 +376,6 @@ footer {
   border-radius: 2px;
   background: #FFFFFF;
   background: linear-gradient(182deg, rgba(255, 255, 255, 1) 0%, rgba(205, 188, 191, 1) 100%);
-  box-shadow:
-    3px 3px 5px rgba(72, 72, 72, 0.4),
-    6px 6px 10px rgba(72, 72, 72, 0.2);
   transform: translateX(-1.5rem);
 }
 
@@ -393,6 +392,7 @@ footer {
   filter: invert(40%);
 }
 
+.modal .container .central .alias,
 .content-extra .alias {
   display: flex;
   align-items: center;
@@ -406,4 +406,8 @@ footer {
   border-radius: 4px;
   text-decoration: none;
   padding: 0 1rem;
+}
+
+.modal .container .central .alias{
+  margin-top: 0.5rem;
 }
