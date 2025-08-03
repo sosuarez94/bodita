@@ -20,50 +20,50 @@ const Invitation: React.FC = () => {
   telefono
 
   useEffect(() => {
-    const fetchData = async () => {
-      const { telefono, id } = getQueryParams();
-
-      if (!telefono || !id) {
-        setError("Faltan parámetros en la URL");
-        setLoading(false);
-        return;
-      }
-
-      try {
-        const data = await getConfirmedData(telefono, id);
-        //console.log(data);
-
-        const personasOriginales: string[] =
-          data.personasOriginales?.split(",").map((p: any) => p.trim()) ?? [];
-        const nombresConfirmados: string[] =
-          data.nombresConfirmadosParaID?.split(",").map((p: any) => p.trim()) ?? [];
-
-        const mapped = personasOriginales.map((name, index) => {
-          const yaConfirmado = nombresConfirmados.includes(name);
-          return {
-            id: `check${index}`,
-            label: name,
-            checked: yaConfirmado,
-            disabled: yaConfirmado,
-          };
-        });
-
-        setOptions(mapped);
-
-        // si TODOS están confirmados, deshabilitamos todo
-        const todosConfirmados = mapped.every((o) => o.disabled);
-        setAllConfirmed(todosConfirmados);
-
-        setTelefono(telefono); // guardamos telefono para enviar después
-      } catch (err: any) {
-        setError(err.message || "Error desconocido");
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchData();
   }, []);
+
+  const fetchData = async () => {
+    const { telefono, id } = getQueryParams();
+
+    if (!telefono || !id) {
+      setError("Faltan parámetros en la URL");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const data = await getConfirmedData(telefono, id);
+      //console.log(data);
+
+      const personasOriginales: string[] =
+        data.personasOriginales?.split(",").map((p: any) => p.trim()) ?? [];
+      const nombresConfirmados: string[] =
+        data.nombresConfirmadosParaID?.split(",").map((p: any) => p.trim()) ?? [];
+
+      const mapped = personasOriginales.map((name, index) => {
+        const yaConfirmado = nombresConfirmados.includes(name);
+        return {
+          id: `check${index}`,
+          label: name,
+          checked: yaConfirmado,
+          disabled: yaConfirmado,
+        };
+      });
+
+      setOptions(mapped);
+
+      // si TODOS están confirmados, deshabilitamos todo
+      const todosConfirmados = mapped.every((o) => o.disabled);
+      setAllConfirmed(todosConfirmados);
+
+      setTelefono(telefono); // guardamos telefono para enviar después
+    } catch (err: any) {
+      setError(err.message || "Error desconocido");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleToggle = (index: number) => {
     const updated = [...options];
@@ -91,6 +91,7 @@ const Invitation: React.FC = () => {
       const result = await postConfirmation(personas, telefono);
       alert("Confirmación enviada");
       result
+      await fetchData()
       setSendLoading(false)
       //console.log(result);
     } catch (error) {
@@ -101,6 +102,11 @@ const Invitation: React.FC = () => {
   return (
     <section className="invitation">
       <h2>Invitados:</h2>
+      {sendLoading && (
+        <div className="content-msg">
+          <span className="loader"></span>
+        </div>
+      )}
 
       {loading && (
         <div className="content-msg">
@@ -112,11 +118,7 @@ const Invitation: React.FC = () => {
           <p style={{ color: "red" }}>{error}</p>
         </div>
       )}
-      {sendLoading && (
-        <div className="content-msg">
-          <span className="loader"></span>
-        </div>
-      )}
+
       {!loading && !error && !sendLoading && (
         <>
           <div className="grid-container">

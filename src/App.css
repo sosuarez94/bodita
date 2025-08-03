@@ -227,7 +227,8 @@ hr {
   color: #484848;
 }
 
-.invitation .grid-container .loader {
+.invitation .content-msg .loader {
+  margin-top: 1rem;
   width: 48px;
   height: 48px;
   border: 5px solid #677e76;
