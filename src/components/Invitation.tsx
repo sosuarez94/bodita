@@ -39,10 +39,10 @@ const Invitation: React.FC = () => {
       const personasOriginales: string[] =
         data.personasOriginales?.split(",").map((p: any) => p.trim()) ?? [];
       const nombresConfirmados: string[] =
-        data.nombresConfirmadosParaID?.split(",").map((p: any) => p.trim()) ?? [];
+        data.nombresConfirmadosParaID?.split(",").map((p: any) => p.trim().toLowerCase()) ?? [];
 
       const mapped = personasOriginales.map((name, index) => {
-        const yaConfirmado = nombresConfirmados.includes(name);
+        const yaConfirmado = nombresConfirmados.includes(name.toLowerCase());
         return {
           id: `check${index}`,
           label: name,
